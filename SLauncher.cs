@@ -51,13 +51,14 @@ namespace ScriptLauncher
 		// Name of the sender object is the command to execute.  
 		private void cMenu_Click(object sender, EventArgs e)
 		{
+			//TODO: Need to try/catch for exceptions here, in case launching process fails. 
 			//Verify that we clicked a ToolStripMenuItem
 			if (sender.GetType() == typeof(System.Windows.Forms.ToolStripMenuItem))
 			{
 				//Cast object sender back to ToolStripMenuItem object so we can reference the name property. 
 				ToolStripMenuItem clickedItem = (ToolStripMenuItem) sender;	
 				System.Diagnostics.Debug.WriteLine(clickedItem.Name);
-				//Create a new process
+				//Create a new process and launch it. 
 				System.Diagnostics.Process command = new System.Diagnostics.Process();
 				System.Diagnostics.ProcessStartInfo commandInfo = new System.Diagnostics.ProcessStartInfo();
 				commandInfo.FileName = clickedItem.Name;
@@ -72,18 +73,22 @@ namespace ScriptLauncher
 			Application.Exit();
 		}
 
+		// Creates a ToolStripMenuItem for each item in category array. 
+		// Adds dropdown items for each item in the cmd array to the toolstrip with the matching category name.  
 		private void initContextMenu()
 		{
-			//NEED AN INTERFACE TO STORE THESE ITEMS IN A LIST AND POPULATE THE MENU
-			//ALSO NEED A GUI FOR ADDING/REMOVE ITEMS
+			//TODO: ALSO NEED A GUI FOR ADDING/REMOVE ITEMS
 			contextMenuStrip.Items.Clear();
 
 			for (int c = 0; c < cfg.Categories.Count; c++)
 			{
+				// Retrieve category, create ToolStripMenu. 
 				string currentCat = (string)cfg.Categories[c];
-				ToolStripLabel catLabel = new ToolStripLabel(currentCat);
+				ToolStripMenuItem catLabel = new ToolStripMenuItem(currentCat);
 				contextMenuStrip.Items.Add(catLabel);
 
+				//Create dropdown items for all commands and place them 
+				// into the matching category dropdownitems list. 
 				for (int cmd = 0; cmd < cfg.CMDList.Count; cmd++)
 				{
 					CmdItem current = (CmdItem)cfg.CMDList[cmd];
@@ -100,7 +105,7 @@ namespace ScriptLauncher
 							cmdString
 						);
 						newItem.Click += cMenu_Click;
-						contextMenuStrip.Items.Add(newItem);
+						catLabel.DropDownItems.Add(newItem);
 					}
 				}
 			}

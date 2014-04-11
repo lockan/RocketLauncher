@@ -9,7 +9,7 @@ namespace ScriptLauncher
 	public class SLConfig
 	{
 		//TODO: don't hard-code this. Get it from the a system folder somehow. 
-		private static string configPath = @"D:\Code\VisualStudio\ScriptLauncher\ScriptLauncher\config.xml";
+		private static string configPath = @"D:\Code\CSharp\ScriptLauncher\ScriptLauncher\config.xml";
 
 		private static XmlNodeList cats;
 		private static ArrayList cmdList = new ArrayList();
@@ -39,6 +39,7 @@ namespace ScriptLauncher
 		}
 
 		//Read and parse config from config.xml file. 
+		//Populates the config arrays, but does not create any menu items. 
 		public static void ParseConfig()
 		{
 			Dbg("Reading " + configPath);
