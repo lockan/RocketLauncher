@@ -14,6 +14,7 @@ namespace ScriptLauncher
 {
     public partial class SLauncher : Form
     {
+		//New private instance of config. >> Config constructor will parse the config file. 
 		private static SLConfig cfg = new SLConfig();
 		
 		public SLauncher()
@@ -21,7 +22,7 @@ namespace ScriptLauncher
             InitializeComponent();		
 		}
 
-		// ---- There's another solution here: 
+		// ---- There's a better solution for auto-minimize here: 
 		// http://stackoverflow.com/questions/1730731/how-to-start-winform-app-minimized-to-tray
 		// Look this stuff up later to understand it. 
 		
@@ -30,7 +31,7 @@ namespace ScriptLauncher
 			initContextMenu();
 			this.WindowState = FormWindowState.Minimized;
 			trayIcon.Visible = true;
-			cfg = new SLConfig();
+			listBoxCats.DataSource = cfg.Categories;
 		}
 
         private void SLauncher_Resize(object sender, EventArgs e)
@@ -56,6 +57,7 @@ namespace ScriptLauncher
 			if (sender.GetType() == typeof(System.Windows.Forms.ToolStripMenuItem))
 			{
 				//Cast object sender back to ToolStripMenuItem object so we can reference the name property. 
+				//TODO: Wrap this into a function. 
 				ToolStripMenuItem clickedItem = (ToolStripMenuItem) sender;	
 				System.Diagnostics.Debug.WriteLine(clickedItem.Name);
 				//Create a new process and launch it. 
@@ -115,6 +117,11 @@ namespace ScriptLauncher
 			ToolStripMenuItem exitItem = new ToolStripMenuItem("Exit", null, null, "Exit");
 			exitItem.Click += exitItem_Click;
 			contextMenuStrip.Items.Add(exitItem);
+		}
+
+		private void buttonHide_Click(object sender, EventArgs e)
+		{
+			this.Hide();
 		}
 	}
 }

@@ -3,13 +3,14 @@ using System.Diagnostics;
 using System.Xml;
 using System.IO;
 using System.Collections;
+using System.Windows.Forms;
 
 namespace ScriptLauncher
 {
 	public class SLConfig
 	{
-		//TODO: don't hard-code this. Get it from the a system folder somehow. 
-		private static string configPath = @"D:\Code\CSharp\ScriptLauncher\ScriptLauncher\config.xml";
+		private static string dataPath = Application.LocalUserAppDataPath;
+		private static string configPath = dataPath + "\\config.xml";
 
 		private static XmlNodeList cats;
 		private static ArrayList cmdList = new ArrayList();
@@ -50,7 +51,7 @@ namespace ScriptLauncher
 					XmlDocument xconfig = new XmlDocument();
 					xconfig.Load(configPath);
 					cats = xconfig.DocumentElement.SelectNodes("/config/category");
-					
+
 					for (int i = 0; i < cats.Count; i++)
 					{
 						string catName = cats.Item(i).Attributes["name"].InnerText;
@@ -71,6 +72,13 @@ namespace ScriptLauncher
 				{
 					System.Diagnostics.Debug.WriteLine("EXCEPTION" + ex.Message);
 				}
+				finally
+				{
+					// Print out final array lengths:
+					Dbg("Categories: " + categories.Count.ToString());
+					Dbg("Commands: " + cmdList.Count.ToString());
+				}
+
 			}
 		}
 	}
