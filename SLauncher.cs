@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -25,14 +25,15 @@ namespace ScriptLauncher
 		// ---- There's a better solution for auto-minimize here: 
 		// http://stackoverflow.com/questions/1730731/how-to-start-winform-app-minimized-to-tray
 		// Look this stuff up later to understand it. 
-		
-		private void SLauncher_Load(object sender, EventArgs e)
-		{
-			initContextMenu();
-			this.WindowState = FormWindowState.Minimized;
-			trayIcon.Visible = true;
-			listBoxCats.DataSource = cfg.Categories;
-		}
+
+        private void SLauncher_Load(object sender, EventArgs e)
+        {
+            initContextMenu();
+            this.WindowState = FormWindowState.Minimized;
+            trayIcon.Visible = true;
+            dataGridCommands.AutoGenerateColumns = false;
+            listBoxCategories.DataSource = cfg.Categories;
+        }
 
         private void SLauncher_Resize(object sender, EventArgs e)
         {
@@ -123,5 +124,24 @@ namespace ScriptLauncher
 		{
 			this.Hide();
 		}
+
+        private void listBoxCategories_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string filterString = listBoxCategories.SelectedItem.ToString();
+            dataGridCommands.DataSource = FilterCommands(filterString);
+        }
+
+        private ArrayList FilterCommands(string catFilter)
+        {
+            ArrayList filteredList = new ArrayList();
+            foreach (CmdItem cItem in cfg.CMDList) 
+            {
+                if (cItem.Category == catFilter) 
+                {
+                    filteredList.Add(cItem);
+                }
+            }
+            return filteredList;
+        }
 	}
 }
