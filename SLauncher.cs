@@ -128,7 +128,7 @@ namespace ScriptLauncher
         private void listBoxCategories_SelectedIndexChanged(object sender, EventArgs e)
         {
             string filterString = listBoxCategories.SelectedItem.ToString();
-            dataGridCommands.DataSource = FilterCommands(filterString);
+			dataGridCommands.DataSource = FilterCommands(filterString);
         }
 
         private ArrayList FilterCommands(string catFilter)
@@ -143,5 +143,19 @@ namespace ScriptLauncher
             }
             return filteredList;
         }
+
+		private void buttonAddCat_Click(object sender, EventArgs e)
+		{
+			Form addDlg = new SLDlg_AddCategory();
+			DialogResult result = addDlg.ShowDialog();
+		}
+
+		private void buttonEditCat_Click(object sender, EventArgs e)
+		{
+			string selectedCat = listBoxCategories.SelectedItem.ToString();
+			System.Diagnostics.Debug.WriteLine(listBoxCategories.SelectedItem);
+			Form editDlg = new SLDlg_AddCategory(true, listBoxCategories.SelectedItem.ToString());
+			DialogResult result = editDlg.ShowDialog();
+		}
 	}
 }
