@@ -18,7 +18,7 @@ namespace ScriptLauncher
 
 		public SLConfig()
 		{
-			ParseConfig();
+			//ParseConfig();
 		}
 
 		public ArrayList CMDList
@@ -34,7 +34,7 @@ namespace ScriptLauncher
 		}
 
 		// Debug helper function. (Less typing)
-		private static void Dbg (String str)
+		public static void Dbg (String str)
 		{
 			System.Diagnostics.Debug.WriteLine(str);
 		}
@@ -48,9 +48,9 @@ namespace ScriptLauncher
 			{
 				try
 				{
-					XmlDocument xconfig = new XmlDocument();
-					xconfig.Load(configPath);
-					cats = xconfig.DocumentElement.SelectNodes("/config/category");
+					XmlDocument xmlconfig = new XmlDocument();
+					xmlconfig.Load(configPath);
+					cats = xmlconfig.DocumentElement.SelectNodes("/config/category");
 
 					for (int i = 0; i < cats.Count; i++)
 					{
@@ -81,5 +81,36 @@ namespace ScriptLauncher
 
 			}
 		}
+
+		public static void AddCategory(string addcat)
+		{
+			categories.Add(addcat);
+		}
+
+		public static void RenameCategory(string oldCatName, string newCatName)
+		{
+			int replaceIndex = categories.IndexOf(oldCatName);
+			Dbg("Replace: Old category: " + oldCatName + " - Index: " + replaceIndex);
+			categories.RemoveAt(replaceIndex);
+			categories.Insert(replaceIndex, newCatName);
+
+			for (int i = 0; i < cmdList.Count; i++)
+			{
+				CmdItem current = (CmdItem)cmdList[i];
+				if (current.Category == oldCatName)
+				{
+					CmdItem renamed = new CmdItem(newCatName, current.Name, current.Value);
+					cmdList.Insert(i, renamed);
+					cmdList.Remove(current);
+					Dbg("renaming: " + current.ToString() + " to " + renamed.ToString());
+				}
+			}
+		}
+
+		public static void AddCommand(string addCat, string addName, string addcmd)
+		{
+			cmdList.Add(new CmdItem(addCat, addName, addcmd));
+		}
+
 	}
 }

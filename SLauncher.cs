@@ -19,7 +19,8 @@ namespace ScriptLauncher
 		
 		public SLauncher()
         {
-            InitializeComponent();		
+            InitializeComponent();
+			SLConfig.ParseConfig();
 		}
 
 		// ---- There's a better solution for auto-minimize here: 
@@ -125,11 +126,14 @@ namespace ScriptLauncher
 			this.Hide();
 		}
 
-        private void listBoxCategories_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string filterString = listBoxCategories.SelectedItem.ToString();
-			dataGridCommands.DataSource = FilterCommands(filterString);
-        }
+		private void listBoxCategories_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (listBoxCategories.SelectedItem != null)
+			{
+				string filterString = listBoxCategories.SelectedItem.ToString();
+				dataGridCommands.DataSource = FilterCommands(filterString);
+			}
+		}
 
         private ArrayList FilterCommands(string catFilter)
         {
@@ -146,16 +150,29 @@ namespace ScriptLauncher
 
 		private void buttonAddCat_Click(object sender, EventArgs e)
 		{
-			Form addDlg = new SLDlg_AddCategory();
+			Form addDlg = new Dialog_AddCategory();
 			DialogResult result = addDlg.ShowDialog();
+
+			if (result == DialogResult.OK)
+			{
+				listBoxCategories.DataSource = null;
+				listBoxCategories.DataSource = cfg.Categories;
+			}
+			//TODO: Write new category to XML document at this point, or just before it. Use try/catch for IO.  
 		}
 
 		private void buttonEditCat_Click(object sender, EventArgs e)
 		{
 			string selectedCat = listBoxCategories.SelectedItem.ToString();
 			System.Diagnostics.Debug.WriteLine(listBoxCategories.SelectedItem);
-			Form editDlg = new SLDlg_AddCategory(true, listBoxCategories.SelectedItem.ToString());
+			Form editDlg = new Dialog_AddCategory(true, listBoxCategories.SelectedItem.ToString());
 			DialogResult result = editDlg.ShowDialog();
+
+			if (result == DialogResult.OK)
+			{
+				listBoxCategories.DataSource = null;
+				listBoxCategories.DataSource = cfg.Categories;
+			}
 		}
 	}
 }

@@ -21,20 +21,25 @@ namespace ScriptLauncher
 		
 		public string Category
 		{
-			private set { this.cmd_category = value; }
+			set { this.cmd_category = value; }
 			get { return this.cmd_category; }
 		}
 
 		public string Name
 		{
-			private set { this.cmd_name = value; }
+			set { this.cmd_name = value; }
 			get { return this.cmd_name; }
 		}
 
 		public string Value
 		{
-			private set { this.cmd_value = value; }
+			set { this.cmd_value = value; }
 			get { return this.cmd_value; }
+		}
+
+		public string ToString()
+		{
+			return cmd_category + " - " + cmd_name + " - " + cmd_value;
 		}
 	}
 }

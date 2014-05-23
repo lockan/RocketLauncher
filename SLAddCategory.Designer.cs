@@ -1,6 +1,6 @@
 ﻿namespace ScriptLauncher
 {
-	partial class SLDlg_AddCategory
+	partial class Dialog_AddCategory
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -71,6 +71,7 @@
 			this.buttonCancel.TabIndex = 3;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
+			this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
 			// 
 			// buttonAdd
 			// 
@@ -80,8 +81,9 @@
 			this.buttonAdd.TabIndex = 4;
 			this.buttonAdd.Text = "Add";
 			this.buttonAdd.UseVisualStyleBackColor = true;
+			this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
 			// 
-			// SLDlg_AddCategory
+			// Dialog_AddCategory
 			// 
 			this.AcceptButton = this.buttonAdd;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -94,11 +96,11 @@
 			this.Controls.Add(this.panelNewCat);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;
-			this.Name = "SLDlg_AddCategory";
+			this.Name = "Dialog_AddCategory";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Add Category";
-			this.Load += new System.EventHandler(this.SLDlg_AddCategory_Load);
+			this.Load += new System.EventHandler(this.Dialog_AddCategory_Load);
 			this.panelNewCat.ResumeLayout(false);
 			this.panelNewCat.PerformLayout();
 			this.ResumeLayout(false);
