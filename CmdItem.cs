@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ScriptLauncher
 {
-	struct CmdItem
+	public class CmdItem
 	{
 		private string cmd_category;
 		private string cmd_name;
@@ -37,7 +37,7 @@ namespace ScriptLauncher
 			get { return this.cmd_value; }
 		}
 
-		public string ToString()
+		public override string ToString()
 		{
 			return cmd_category + " - " + cmd_name + " - " + cmd_value;
 		}

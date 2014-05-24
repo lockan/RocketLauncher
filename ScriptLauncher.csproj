@@ -54,6 +54,12 @@
     <Compile Include="SLAddCategory.Designer.cs">
       <DependentUpon>SLAddCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="SLAddCmd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SLAddCmd.Designer.cs">
+      <DependentUpon>SLAddCmd.cs</DependentUpon>
+    </Compile>
     <Compile Include="SLConfig.cs" />
     <Compile Include="SLauncher.cs">
       <SubType>Form</SubType>
@@ -65,6 +71,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="SLAddCategory.resx">
       <DependentUpon>SLAddCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SLAddCmd.resx">
+      <DependentUpon>SLAddCmd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SLauncher.resx">
       <DependentUpon>SLauncher.cs</DependentUpon>

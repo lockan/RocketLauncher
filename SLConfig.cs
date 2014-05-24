@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Xml;
 using System.IO;
-using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace ScriptLauncher
@@ -13,21 +13,21 @@ namespace ScriptLauncher
 		private static string configPath = dataPath + "\\config.xml";
 
 		private static XmlNodeList cats;
-		private static ArrayList cmdList = new ArrayList();
-		private static ArrayList categories = new ArrayList();
+		private static List<CmdItem> cmdList = new List<CmdItem>();
+		private static List<string> categories = new List<string>();
 
 		public SLConfig()
 		{
 			//ParseConfig();
 		}
 
-		public ArrayList CMDList
+		public List<CmdItem> CMDList
 		{
 			get { return cmdList; }
 			private set {;}
 		}
 
-		public ArrayList Categories
+		public List<string> Categories
 		{
 			get { return categories; }
 			private set {;}
@@ -82,11 +82,26 @@ namespace ScriptLauncher
 			}
 		}
 
+		private static int FindCmdByName(string searchName)
+		{
+			int searchIndex = -1;
+			foreach (CmdItem current in cmdList)
+			{
+				if (current.Name.Equals(searchName))
+				{
+					searchIndex = cmdList.IndexOf(current);
+				}
+			}
+			return searchIndex; //TODO: what happens if multiple commands have the same name? 
+		}
+
 		public static void AddCategory(string addcat)
 		{
 			categories.Add(addcat);
 		}
 
+		// Renames a category in the category list. 
+		// Also updates all commands with the same category name from the cmdList. 
 		public static void RenameCategory(string oldCatName, string newCatName)
 		{
 			int replaceIndex = categories.IndexOf(oldCatName);
@@ -96,7 +111,7 @@ namespace ScriptLauncher
 
 			for (int i = 0; i < cmdList.Count; i++)
 			{
-				CmdItem current = (CmdItem)cmdList[i];
+				CmdItem current = cmdList[i];
 				if (current.Category == oldCatName)
 				{
 					CmdItem renamed = new CmdItem(newCatName, current.Name, current.Value);
@@ -110,6 +125,14 @@ namespace ScriptLauncher
 		public static void AddCommand(string addCat, string addName, string addcmd)
 		{
 			cmdList.Add(new CmdItem(addCat, addName, addcmd));
+		}
+
+		public static void RenameCommand(string oldCmdName, string newCmdName)
+		{
+			int replaceIndex = FindCmdByName(oldCmdName);
+			CmdItem delCmd = cmdList[replaceIndex];
+			cmdList.Insert(replaceIndex, new CmdItem(delCmd.Category, newCmdName, delCmd.Value));
+			cmdList.Remove(delCmd);
 		}
 
 	}

@@ -134,6 +134,7 @@
 			this.buttonEditCmd.Size = new System.Drawing.Size(32, 30);
 			this.buttonEditCmd.TabIndex = 13;
 			this.buttonEditCmd.UseVisualStyleBackColor = true;
+			this.buttonEditCmd.Click += new System.EventHandler(this.buttonEditCmd_Click);
 			// 
 			// buttonDelCmd
 			// 
@@ -152,6 +153,7 @@
 			this.buttonAddCmd.Size = new System.Drawing.Size(32, 30);
 			this.buttonAddCmd.TabIndex = 11;
 			this.buttonAddCmd.UseVisualStyleBackColor = true;
+			this.buttonAddCmd.Click += new System.EventHandler(this.buttonAddCmd_Click);
 			// 
 			// buttonEditCat
 			// 

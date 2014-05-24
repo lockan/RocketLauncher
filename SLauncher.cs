@@ -58,16 +58,7 @@ namespace ScriptLauncher
 			//Verify that we clicked a ToolStripMenuItem
 			if (sender.GetType() == typeof(System.Windows.Forms.ToolStripMenuItem))
 			{
-				//Cast object sender back to ToolStripMenuItem object so we can reference the name property. 
-				//TODO: Wrap this into a function. 
-				ToolStripMenuItem clickedItem = (ToolStripMenuItem) sender;	
-				System.Diagnostics.Debug.WriteLine(clickedItem.Name);
-				//Create a new process and launch it. 
-				System.Diagnostics.Process command = new System.Diagnostics.Process();
-				System.Diagnostics.ProcessStartInfo commandInfo = new System.Diagnostics.ProcessStartInfo();
-				commandInfo.FileName = clickedItem.Name;
-				command.StartInfo = commandInfo;
-				command.Start();
+				RunCommand(sender);
 			}
 		}
 		
@@ -148,6 +139,19 @@ namespace ScriptLauncher
             return filteredList;
         }
 
+		private void RunCommand(Object clicked)
+		{
+			//Cast object sender back to ToolStripMenuItem object so we can reference the name property. 
+			ToolStripMenuItem clickedItem = (ToolStripMenuItem)clicked;
+			System.Diagnostics.Debug.WriteLine(clickedItem.Name);
+			//Create a new process and launch it. 
+			System.Diagnostics.Process command = new System.Diagnostics.Process();
+			System.Diagnostics.ProcessStartInfo commandInfo = new System.Diagnostics.ProcessStartInfo();
+			commandInfo.FileName = clickedItem.Name;
+			command.StartInfo = commandInfo;
+			command.Start();
+		}
+
 		private void buttonAddCat_Click(object sender, EventArgs e)
 		{
 			Form addDlg = new Dialog_AddCategory();
@@ -157,6 +161,7 @@ namespace ScriptLauncher
 			{
 				listBoxCategories.DataSource = null;
 				listBoxCategories.DataSource = cfg.Categories;
+				initContextMenu();
 			}
 			//TODO: Write new category to XML document at this point, or just before it. Use try/catch for IO.  
 		}
@@ -172,7 +177,29 @@ namespace ScriptLauncher
 			{
 				listBoxCategories.DataSource = null;
 				listBoxCategories.DataSource = cfg.Categories;
+				initContextMenu();
 			}
+		}
+
+		private void buttonAddCmd_Click(object sender, EventArgs e)
+		{
+			//TODO: Create Add Command dialog, show it here. 
+			string currentCat = listBoxCategories.SelectedItem.ToString();
+			Form addCmdDlg = new Dialog_AddCmd(currentCat);
+			DialogResult result = addCmdDlg.ShowDialog();
+
+			if (result == DialogResult.OK)
+			{
+				dataGridCommands.DataSource = null;
+				dataGridCommands.DataSource = FilterCommands(currentCat);
+				initContextMenu();
+			}
+			//TODO: Write new category to XML document at this point, or just before it. Use try/catch for IO.  
+		}
+
+		private void buttonEditCmd_Click(object sender, EventArgs e)
+		{
+			//CmdItem selectedCmd = cfg.CMDList[dataGridCommands.CurrentCell.RowIndex];
 		}
 	}
 }
