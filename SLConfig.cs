@@ -82,7 +82,8 @@ namespace ScriptLauncher
 			}
 		}
 
-		private static int FindCmdByName(string searchName)
+		// Searches command list for a command name, returns the index of the first match. 
+        public static int FindCmdByName(string searchName)
 		{
 			int searchIndex = -1;
 			foreach (CmdItem current in cmdList)
@@ -127,7 +128,8 @@ namespace ScriptLauncher
 			cmdList.Add(new CmdItem(addCat, addName, addcmd));
 		}
 
-		public static void RenameCommand(string oldCmdName, string newCmdName)
+		// Is called if a category gets renamed.
+        public static void UpdateCommandCategory(string oldCmdName, string newCmdName)
 		{
 			int replaceIndex = FindCmdByName(oldCmdName);
 			CmdItem delCmd = cmdList[replaceIndex];
@@ -135,5 +137,13 @@ namespace ScriptLauncher
 			cmdList.Remove(delCmd);
 		}
 
+        // Used to replace/rename/modify existing commands. 
+        public static void ReplaceCommand(int replaceIndex, CmdItem replaceCmd)
+        {
+            CmdItem delCmd = cmdList[replaceIndex];
+            cmdList.Insert(replaceIndex, replaceCmd);
+            cmdList.Remove(delCmd);
+        }
 	}
 }
+

@@ -199,7 +199,26 @@ namespace ScriptLauncher
 
 		private void buttonEditCmd_Click(object sender, EventArgs e)
 		{
-			//CmdItem selectedCmd = cfg.CMDList[dataGridCommands.CurrentCell.RowIndex];
+            string currentCat = listBoxCategories.SelectedItem.ToString();
+
+            int selectedRow = dataGridCommands.CurrentCell.RowIndex;
+            string selName = dataGridCommands.Rows[selectedRow].Cells[0].Value.ToString();
+            int selCmdIndex = SLConfig.FindCmdByName(selName);
+            System.Diagnostics.Debug.WriteLine("SelCmd: " + selName + " SelIndex: " + selCmdIndex);
+            
+            CmdItem selectedCmd = cfg.CMDList[selCmdIndex];
+            System.Diagnostics.Debug.WriteLine("Selected in Config: " + selectedCmd.ToString());
+
+            Form addCmdDlg = new Dialog_AddCmd(true, currentCat, selectedCmd, selCmdIndex);
+            DialogResult result = addCmdDlg.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                dataGridCommands.DataSource = null;
+                dataGridCommands.DataSource = FilterCommands(currentCat);
+                initContextMenu();
+            }
+            //TODO: Write new command to XML document at this point, or just before it. Use try/catch for IO.  
 		}
 	}
 }
