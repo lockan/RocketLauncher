@@ -220,5 +220,26 @@ namespace ScriptLauncher
             }
             //TODO: Write new command to XML document at this point, or just before it. Use try/catch for IO.  
 		}
+
+		private void buttonDelCmd_Click(object sender, EventArgs e)
+		{
+			string currentCat = listBoxCategories.SelectedItem.ToString();
+
+			int selectedRow = dataGridCommands.CurrentCell.RowIndex;
+			string selName = dataGridCommands.Rows[selectedRow].Cells[0].Value.ToString();
+			int selCmdIndex = SLConfig.FindCmdByName(selName);
+			
+			DialogResult result = MessageBox.Show(
+				"Are you sure you wish to delete the item \"" + selName + "\"? Changes cannot be undone. ",
+						"Delete Confirmation",
+						MessageBoxButtons.YesNo);
+			if (result == DialogResult.Yes)
+			{
+				SLConfig.DeleteCommand(selCmdIndex);
+				dataGridCommands.DataSource = null;
+				dataGridCommands.DataSource = FilterCommands(currentCat);
+				initContextMenu();
+			}
+		}
 	}
 }

@@ -144,6 +144,7 @@
 			this.buttonDelCmd.Size = new System.Drawing.Size(32, 30);
 			this.buttonDelCmd.TabIndex = 12;
 			this.buttonDelCmd.UseVisualStyleBackColor = true;
+			this.buttonDelCmd.Click += new System.EventHandler(this.buttonDelCmd_Click);
 			// 
 			// buttonAddCmd
 			// 

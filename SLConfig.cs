@@ -144,6 +144,18 @@ namespace ScriptLauncher
             cmdList.Insert(replaceIndex, replaceCmd);
             cmdList.Remove(delCmd);
         }
+
+		public static void DeleteCommand(int delIndex)
+		{
+			cmdList.RemoveAt(delIndex);
+		}
+
+		public static void DeleteCategory(string delCategory)
+		{
+			// First delete all command entries from CMD list. 
+			// Next, delete the category from cat list. 
+ 			// TODO: Write changes out to XML
+		}
 	}
 }
 
