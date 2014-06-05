@@ -229,10 +229,8 @@ namespace ScriptLauncher
 			string selName = dataGridCommands.Rows[selectedRow].Cells[0].Value.ToString();
 			int selCmdIndex = SLConfig.FindCmdByName(selName);
 			
-			DialogResult result = MessageBox.Show(
-				"Are you sure you wish to delete the item \"" + selName + "\"? Changes cannot be undone. ",
-						"Delete Confirmation",
-						MessageBoxButtons.YesNo);
+			DialogResult result = ShowDeleteConfirmation(selName);
+			  
 			if (result == DialogResult.Yes)
 			{
 				SLConfig.DeleteCommand(selCmdIndex);
@@ -240,6 +238,35 @@ namespace ScriptLauncher
 				dataGridCommands.DataSource = FilterCommands(currentCat);
 				initContextMenu();
 			}
+		}
+
+		private void buttonDelCat_Click(object sender, EventArgs e)
+		{
+			string currentCat = listBoxCategories.SelectedItem.ToString();
+
+			DialogResult result = ShowDeleteConfirmation(currentCat);
+
+			if (result == DialogResult.Yes)
+			{
+				SLConfig.DeleteCategory(currentCat);
+				dataGridCommands.DataSource = null;
+				dataGridCommands.DataSource = FilterCommands(currentCat);
+				listBoxCategories.DataSource = null;
+				listBoxCategories.DataSource = cfg.Categories;
+				initContextMenu();
+			}
+
+		}
+
+		private DialogResult ShowDeleteConfirmation(string selectedItemString)
+		{
+			DialogResult result = MessageBox.Show(
+				"Are you sure you wish to delete the item \"" + selectedItemString + 
+				"\"? Changes cannot be undone. ",
+				"Delete Confirmation",
+				MessageBoxButtons.YesNo);
+
+			return result;
 		}
 	}
 }

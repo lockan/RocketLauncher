@@ -174,6 +174,7 @@
 			this.buttonDelCat.Size = new System.Drawing.Size(32, 30);
 			this.buttonDelCat.TabIndex = 9;
 			this.buttonDelCat.UseVisualStyleBackColor = true;
+			this.buttonDelCat.Click += new System.EventHandler(this.buttonDelCat_Click);
 			// 
 			// buttonAddCat
 			// 

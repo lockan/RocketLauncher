@@ -78,7 +78,6 @@ namespace ScriptLauncher
 					Dbg("Categories: " + categories.Count.ToString());
 					Dbg("Commands: " + cmdList.Count.ToString());
 				}
-
 			}
 		}
 
@@ -129,7 +128,7 @@ namespace ScriptLauncher
 		}
 
 		// Is called if a category gets renamed.
-        public static void UpdateCommandCategory(string oldCmdName, string newCmdName)
+        public static void UpdateCommandCategories(string oldCmdName, string newCmdName)
 		{
 			int replaceIndex = FindCmdByName(oldCmdName);
 			CmdItem delCmd = cmdList[replaceIndex];
@@ -153,7 +152,22 @@ namespace ScriptLauncher
 		public static void DeleteCategory(string delCategory)
 		{
 			// First delete all command entries from CMD list. 
+			for (int i = 0; i < cmdList.Count; i++)
+			{
+				CmdItem current = cmdList[i];
+				if (current.Category == delCategory)
+				{
+					cmdList.Remove(current);
+				}
+			}
 			// Next, delete the category from cat list. 
+			for  (int i = 0; i < categories.Count; i++)
+			{
+				if (delCategory == categories[i])
+				{
+					categories.RemoveAt(i);
+				}
+			}
  			// TODO: Write changes out to XML
 		}
 	}
