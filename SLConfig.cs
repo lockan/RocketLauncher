@@ -43,6 +43,7 @@ namespace ScriptLauncher
 		//Populates the config arrays, but does not create any menu items. 
 		public static void ParseConfig()
 		{
+			//TODO: Convert to xmlreader / xmlwriter rather than xmlDocument. << Better perf, requires less resources. 
 			Dbg("Reading " + configPath);
 			if (File.Exists(configPath))
 			{
@@ -146,6 +147,9 @@ namespace ScriptLauncher
 
 		public static void DeleteCommand(int delIndex)
 		{
+			//TODO: THIS IS A TEST. 
+			XmlNode dummy = FindCmdInXml();
+			//TODO: THIS IS A TEST. 
 			cmdList.RemoveAt(delIndex);
 		}
 
@@ -169,6 +173,35 @@ namespace ScriptLauncher
 				}
 			}
  			// TODO: Write changes out to XML
+		}
+
+		// XML READ/WRITE FUNCTIONS 
+
+		private static XmlNode FindCmdInXml(CmdItem searchitem)
+		{
+			Dbg("FindCmdInXml searching for " + searchitem.Name);
+			XmlNode searchnode = null;
+			if (File.Exists(configPath))
+			{
+				try
+				{
+					XmlNodeList searchnodelist;
+
+					XmlDocument xmlconfig = new XmlDocument();
+					xmlconfig.Load(configPath);
+
+					//cats.Item(i).Attributes["name"].InnerText;
+					searchnodelist = xmlconfig.GetElementsByTagName("link");
+					searchnode = searchnodelist.Item(0);
+					Dbg("snl[0] = " + searchnodelist.Item(0).InnerText);
+					Dbg("SearchNode: " + searchnode.InnerText);
+				}
+				catch (Exception ex)
+				{
+					Dbg(ex.Message);
+				}
+			}
+			return searchnode;
 		}
 	}
 }

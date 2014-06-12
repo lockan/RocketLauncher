@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>  
 	<category name="PROGRAMS" value="programs">
-    <link name="CMD" value="cmd.exe"/>
-    <link name="Notepad" value="notepad.exe"/>
+	  <link name="CMD" value="cmd.exe"/>
+	  <link name="Notepad" value="notepad.exe"/>
 	  <link name="MSPaint" value="mspaint.exe"/>
   </category>
   <category name="SCRIPTS" value="Scripts">
