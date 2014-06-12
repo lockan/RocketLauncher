@@ -43,11 +43,13 @@ namespace ScriptLauncher
 		//Populates the config arrays, but does not create any menu items. 
 		public static void ParseConfig()
 		{
-            Dbg("Reading config: " + configPath);
-            FileStream configFile = new FileStream(configPath, FileMode.OpenOrCreate, FileAccess.Read);
+            Dbg("Attempting to parse config.xml");
+            FileStream configFile; 
 			if (File.Exists(configPath))
 			{
-				try
+                Dbg("Reading config: " + configPath);
+                configFile = new FileStream(configPath, FileMode.Open, FileAccess.Read);
+                try
 				{
                     XmlReader xmlconfig = XmlReader.Create(configFile);
 
@@ -89,6 +91,11 @@ namespace ScriptLauncher
                     configFile.Close();
 				}
 			}
+            else if (!File.Exists(configPath))
+            {
+                Dbg("No config file found. Creating new empty config.xml");
+                //TODO: Implement new config.xml generation method and stick it right here. 
+            }
 		}
 
 		// Searches command list for a command name, returns the index of the first match. 
@@ -188,30 +195,35 @@ namespace ScriptLauncher
 
 		private static XmlNode FindCmdInXml(CmdItem searchitem)
 		{
-			Dbg("FindCmdInXml searching for " + searchitem.Name);
-			XmlNode searchnode = null;
-			if (File.Exists(configPath))
+            Dbg("FindCmdInXml searching for " + searchitem.Name);
+
+            XmlNode searchnode = null;
+            FileStream configFile;
+            XmlReader xmlsearch;
+                        
+            if (File.Exists(configPath))
 			{
-				try
+                configFile = new FileStream(configPath, FileMode.Open, FileAccess.Read);
+                xmlsearch = XmlReader.Create(configFile);            
+                
+                try
 				{
-					XmlNodeList searchnodelist;
-
-					XmlDocument xmlconfig = new XmlDocument();
-					xmlconfig.Load(configPath);
-
-					//cats.Item(i).Attributes["name"].InnerText;
-					searchnodelist = xmlconfig.GetElementsByTagName("link");
-					searchnode = searchnodelist.Item(0);
-					Dbg("snl[0] = " + searchnodelist.Item(0).InnerText);
-					Dbg("SearchNode: " + searchnode.InnerText);
-				}
-				catch (Exception ex)
-				{
-					Dbg(ex.Message);
-				}
-			}
-			return searchnode;
-		}
+                    xmlsearch.ReadToDescendant(searchitem.Category);
+                    Dbg("xmlsearch: Found category: " + xmlsearch.GetAttribute("name"));
+                }
+                catch (Exception ex)
+                {
+                    Dbg(ex.Message);
+                }
+                finally
+                {
+                    //Close out resources. 
+                    xmlsearch.Close();
+                    configFile.Close();
+                }
+            }
+            return searchnode;
+        }
 	}
 }
 
