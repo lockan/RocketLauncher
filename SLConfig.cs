@@ -43,31 +43,37 @@ namespace ScriptLauncher
 		//Populates the config arrays, but does not create any menu items. 
 		public static void ParseConfig()
 		{
-			//TODO: Convert to xmlreader / xmlwriter rather than xmlDocument. << Better perf, requires less resources. 
-			Dbg("Reading " + configPath);
+            Dbg("Reading config: " + configPath);
+            FileStream configFile = new FileStream(configPath, FileMode.OpenOrCreate, FileAccess.Read);
 			if (File.Exists(configPath))
 			{
 				try
 				{
-					XmlDocument xmlconfig = new XmlDocument();
-					xmlconfig.Load(configPath);
-					cats = xmlconfig.DocumentElement.SelectNodes("/config/category");
+                    XmlReader xmlconfig = XmlReader.Create(configFile);
 
-					for (int i = 0; i < cats.Count; i++)
-					{
-						string catName = cats.Item(i).Attributes["name"].InnerText;
-						categories.Add(catName);
-
-						XmlNodeList links = cats.Item(i).ChildNodes;
-						for (int j = 0; j < links.Count; j++)
-						{
-							cmdList.Add(new CmdItem(
-								cats.Item(i).Attributes["name"].InnerText,
-								links.Item(j).Attributes["name"].InnerText,
-								links.Item(j).Attributes["value"].InnerText
-								));
-						}
-					}
+                    while (xmlconfig.Read())
+                    {
+                        if (xmlconfig.NodeType == XmlNodeType.Element && xmlconfig.Name == "category")
+                        {
+                            string catName = xmlconfig.GetAttribute("name");
+                            categories.Add(catName);
+                            
+                            XmlReader xmlsubtree = xmlconfig.ReadSubtree();
+                            while (xmlsubtree.Read())
+                            {
+                                if (xmlsubtree.NodeType == XmlNodeType.Element && xmlsubtree.Name == "cmd")
+                                {
+                                    cmdList.Add(new CmdItem(
+                                        catName,
+                                        xmlsubtree.GetAttribute("name"),
+                                        xmlsubtree.GetAttribute("value")
+                                    ));
+                                }
+                            }
+                            xmlsubtree.Close();
+                        }
+                    }
+                    xmlconfig.Close();
 				}
 				catch (Exception ex)
 				{
@@ -76,8 +82,11 @@ namespace ScriptLauncher
 				finally
 				{
 					// Print out final array lengths:
-					Dbg("Categories: " + categories.Count.ToString());
+                    Dbg("Done parsing config.");
+                    Dbg("Categories: " + categories.Count.ToString());
 					Dbg("Commands: " + cmdList.Count.ToString());
+                    //Close the FileStream
+                    configFile.Close();
 				}
 			}
 		}
@@ -148,7 +157,7 @@ namespace ScriptLauncher
 		public static void DeleteCommand(int delIndex)
 		{
 			//TODO: THIS IS A TEST. 
-			XmlNode dummy = FindCmdInXml();
+			XmlNode dummy = FindCmdInXml(cmdList[delIndex]);
 			//TODO: THIS IS A TEST. 
 			cmdList.RemoveAt(delIndex);
 		}
