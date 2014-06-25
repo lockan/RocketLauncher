@@ -72,7 +72,6 @@ namespace ScriptLauncher
 		// Adds dropdown items for each item in the cmd array to the toolstrip with the matching category name.  
 		private void initContextMenu()
 		{
-			//TODO: ALSO NEED A GUI FOR ADDING/REMOVE ITEMS
 			contextMenuStrip.Items.Clear();
 
 			for (int c = 0; c < cfg.Categories.Count; c++)
@@ -162,8 +161,7 @@ namespace ScriptLauncher
 				listBoxCategories.DataSource = null;
 				listBoxCategories.DataSource = cfg.Categories;
 				initContextMenu();
-			}
-			//TODO: Write new category to XML document at this point, or just before it. Use try/catch for IO.  
+			}  
 		}
 
 		private void buttonEditCat_Click(object sender, EventArgs e)
@@ -182,8 +180,7 @@ namespace ScriptLauncher
 		}
 
 		private void buttonAddCmd_Click(object sender, EventArgs e)
-		{
-			//TODO: Create Add Command dialog, show it here. 
+		{ 
 			string currentCat = listBoxCategories.SelectedItem.ToString();
 			Form addCmdDlg = new Dialog_AddCmd(currentCat);
 			DialogResult result = addCmdDlg.ShowDialog();
@@ -194,7 +191,6 @@ namespace ScriptLauncher
 				dataGridCommands.DataSource = FilterCommands(currentCat);
 				initContextMenu();
 			}
-			//TODO: Write new category to XML document at this point, or just before it. Use try/catch for IO.  
 		}
 
 		private void buttonEditCmd_Click(object sender, EventArgs e)
@@ -217,8 +213,7 @@ namespace ScriptLauncher
                 dataGridCommands.DataSource = null;
                 dataGridCommands.DataSource = FilterCommands(currentCat);
                 initContextMenu();
-            }
-            //TODO: Write new command to XML document at this point, or just before it. Use try/catch for IO.  
+            } 
 		}
 
 		private void buttonDelCmd_Click(object sender, EventArgs e)

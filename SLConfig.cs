@@ -115,6 +115,7 @@ namespace ScriptLauncher
 		public static void AddCategory(string addcat)
 		{
 			categories.Add(addcat);
+            RebuildXMLConfig();
 		}
 
 		// Renames a category in the category list. 
@@ -137,11 +138,13 @@ namespace ScriptLauncher
 					Dbg("renaming: " + current.ToString() + " to " + renamed.ToString());
 				}
 			}
+            RebuildXMLConfig();
 		}
 
 		public static void AddCommand(string addCat, string addName, string addcmd)
 		{
 			cmdList.Add(new CmdItem(addCat, addName, addcmd));
+            RebuildXMLConfig();
 		}
 
 		// Is called if a category gets renamed.
@@ -151,6 +154,7 @@ namespace ScriptLauncher
 			CmdItem delCmd = cmdList[replaceIndex];
 			cmdList.Insert(replaceIndex, new CmdItem(delCmd.Category, newCmdName, delCmd.Value));
 			cmdList.Remove(delCmd);
+            RebuildXMLConfig();
 		}
 
         // Used to replace/rename/modify existing commands. 
@@ -159,14 +163,13 @@ namespace ScriptLauncher
             CmdItem delCmd = cmdList[replaceIndex];
             cmdList.Insert(replaceIndex, replaceCmd);
             cmdList.Remove(delCmd);
+            RebuildXMLConfig();
         }
 
 		public static void DeleteCommand(int delIndex)
 		{
-			//TODO: THIS IS A TEST. 
-			XmlNode dummy = FindCmdInXml(cmdList[delIndex]);
-			//TODO: THIS IS A TEST. 
 			cmdList.RemoveAt(delIndex);
+            RebuildXMLConfig();
 		}
 
 		public static void DeleteCategory(string delCategory)
@@ -188,41 +191,48 @@ namespace ScriptLauncher
 					categories.RemoveAt(i);
 				}
 			}
- 			// TODO: Write changes out to XML
+            RebuildXMLConfig();
 		}
 
 		// XML READ/WRITE FUNCTIONS 
-
-		private static XmlNode FindCmdInXml(CmdItem searchitem)
-		{
-            Dbg("FindCmdInXml searching for " + searchitem.Name);
-
-            XmlNode searchnode = null;
-            FileStream configFile;
-            XmlReader xmlsearch;
-                        
-            if (File.Exists(configPath))
-			{
-                configFile = new FileStream(configPath, FileMode.Open, FileAccess.Read);
-                xmlsearch = XmlReader.Create(configFile);            
+        private static void RebuildXMLConfig()
+        {
+            XmlDocument newConfig = new XmlDocument();
+            XmlDeclaration xmldec = newConfig.CreateXmlDeclaration("1.0", "UTF-8", null);
+            newConfig.AppendChild(xmldec);
+            XmlElement configNode = newConfig.CreateElement("config");
+            newConfig.AppendChild(configNode);
+            
+            foreach (string c in categories)
+            {
+                XmlElement catElement = newConfig.CreateElement("category");
+                catElement.SetAttribute("name", c);
+                catElement.SetAttribute("value", c);
+                newConfig.DocumentElement.AppendChild(catElement);
                 
-                try
-				{
-                    xmlsearch.ReadToDescendant(searchitem.Category);
-                    Dbg("xmlsearch: Found category: " + xmlsearch.GetAttribute("name"));
-                }
-                catch (Exception ex)
+                XmlElement cmdElement;
+                foreach (CmdItem cmd in cmdList)
                 {
-                    Dbg(ex.Message);
-                }
-                finally
-                {
-                    //Close out resources. 
-                    xmlsearch.Close();
-                    configFile.Close();
+                    if (cmd.Category.ToLower() == c.ToLower())
+                    {
+                        cmdElement = newConfig.CreateElement("cmd");                        
+                        cmdElement.SetAttribute("name", cmd.Name);
+                        cmdElement.SetAttribute("value", cmd.Value);
+                        catElement.AppendChild(cmdElement);
+                    }
                 }
             }
-            return searchnode;
+            
+            try
+            {
+                FileStream configFile;
+                configFile = new FileStream(configPath, FileMode.Open, FileAccess.Write);
+                newConfig.Save(configFile);
+            } 
+            catch (Exception ex)
+            {
+                Dbg(ex.Message);
+            }
         }
 	}
 }
