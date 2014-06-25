@@ -12,13 +12,13 @@ namespace ScriptLauncher
 		private static string dataPath = Application.LocalUserAppDataPath;
 		private static string configPath = dataPath + "\\config.xml";
 
-		private static XmlNodeList cats;
+		//private static XmlNodeList cats;
 		private static List<CmdItem> cmdList = new List<CmdItem>();
 		private static List<string> categories = new List<string>();
 
 		public SLConfig()
 		{
-			//ParseConfig();
+			ParseConfig();
 		}
 
 		public List<CmdItem> CMDList
@@ -94,7 +94,7 @@ namespace ScriptLauncher
             else if (!File.Exists(configPath))
             {
                 Dbg("No config file found. Creating new empty config.xml");
-                //TODO: Implement new config.xml generation method and stick it right here. 
+                CreateNewConfigFile();
             }
 		}
 
@@ -109,7 +109,10 @@ namespace ScriptLauncher
 					searchIndex = cmdList.IndexOf(current);
 				}
 			}
-			return searchIndex; //TODO: what happens if multiple commands have the same name? 
+			return searchIndex; 
+            //TODO: what happens if multiple commands have the same name? 
+            //We'll always return the first one with that name. 
+            //Is that okay, or is there a bug to fix here? 
 		}
 
 		public static void AddCategory(string addcat)
@@ -195,6 +198,26 @@ namespace ScriptLauncher
 		}
 
 		// XML READ/WRITE FUNCTIONS 
+        
+        // Creates a new empty config.xml file if none exists. 
+        private static void CreateNewConfigFile()
+        {
+            using (FileStream configFile = new FileStream(configPath, FileMode.CreateNew, FileAccess.Write))
+            {
+                try
+                {
+                    configFile.Close();
+                }
+                catch (Exception ex)
+                {
+                    Dbg(ex.Message);
+                }
+            }
+        }
+        
+        // Used to rewrite the config.xml file each time an edit is made
+        // to a category or a command in the UI. 
+        // Is called by most edit functions in this class. 
         private static void RebuildXMLConfig()
         {
             XmlDocument newConfig = new XmlDocument();
@@ -222,16 +245,17 @@ namespace ScriptLauncher
                     }
                 }
             }
-            
-            try
-            {
-                FileStream configFile;
-                configFile = new FileStream(configPath, FileMode.Open, FileAccess.Write);
-                newConfig.Save(configFile);
-            } 
-            catch (Exception ex)
-            {
-                Dbg(ex.Message);
+
+            using (FileStream configFile = new FileStream(configPath, FileMode.Open, FileAccess.Write)) 
+            { 
+                try
+                {
+                    newConfig.Save(configFile);
+                } 
+                catch (Exception ex)
+                {
+                    Dbg(ex.Message);
+                }
             }
         }
 	}

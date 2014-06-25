@@ -14,40 +14,54 @@ namespace ScriptLauncher
 {
     public partial class SLauncher : Form
     {
-		//New private instance of config. >> Config constructor will parse the config file. 
+		//New private instance of config. Constructor runs ParseConfig.
 		private static SLConfig cfg = new SLConfig();
+
+        //Form visibility control flags. 
+        private bool showForm;
+        private bool closeForm;
 		
 		public SLauncher()
         {
             InitializeComponent();
-			SLConfig.ParseConfig();
+            initContextMenu();
+            SetVisibleCore(false);
 		}
-
-		// ---- There's a better solution for auto-minimize here: 
-		// http://stackoverflow.com/questions/1730731/how-to-start-winform-app-minimized-to-tray
-		// Look this stuff up later to understand it. 
 
         private void SLauncher_Load(object sender, EventArgs e)
         {
-            initContextMenu();
-            this.WindowState = FormWindowState.Minimized;
+            //this.WindowState = FormWindowState.Minimized;
+            this.Hide();
             trayIcon.Visible = true;
             dataGridCommands.AutoGenerateColumns = false;
             listBoxCategories.DataSource = cfg.Categories;
         }
 
-        private void SLauncher_Resize(object sender, EventArgs e)
+        // ---- Credit for this solution goes to Hans Passant on Stack Overflow. 
+        // http://stackoverflow.com/questions/1730731/how-to-start-winform-app-minimized-to-tray
+        protected override void SetVisibleCore(bool value)
         {
-			if (this.WindowState == FormWindowState.Minimized)
-			{
-				this.Hide();
-				//trayIcon.Visible = true;
-			}
+            if (!showForm)
+            {
+                value = false;
+            }
+            base.SetVisibleCore(value);
         }
-		
+        // Intercept closing event, hide form instead. 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (!closeForm)
+            {
+                this.Hide();
+                e.Cancel = true;
+            }
+            base.OnFormClosing(e);
+        }
+        
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-			this.Show();
+            showForm = true;
+            this.Show();
         }
 
 		// Context menu item event handler. 
@@ -65,14 +79,16 @@ namespace ScriptLauncher
 		//Context menu default application exit item
 		private void exitItem_Click(object sender, EventArgs e)
 		{
-			Application.Exit();
+            closeForm = true;
+            Application.Exit();
 		}
 
 		// Creates a ToolStripMenuItem for each item in category array. 
 		// Adds dropdown items for each item in the cmd array to the toolstrip with the matching category name.  
 		private void initContextMenu()
 		{
-			contextMenuStrip.Items.Clear();
+            SLConfig.Dbg("IN context init");
+            contextMenuStrip.Items.Clear();
 
 			for (int c = 0; c < cfg.Categories.Count; c++)
 			{
@@ -102,6 +118,7 @@ namespace ScriptLauncher
 						catLabel.DropDownItems.Add(newItem);
 					}
 				}
+                SLConfig.Dbg("Done context init");
 			}
 
 			//Always add Exit Button to bottom of menu
@@ -113,7 +130,7 @@ namespace ScriptLauncher
 
 		private void buttonHide_Click(object sender, EventArgs e)
 		{
-			this.Hide();
+            this.Hide();
 		}
 
 		private void listBoxCategories_SelectedIndexChanged(object sender, EventArgs e)
@@ -181,7 +198,8 @@ namespace ScriptLauncher
 
 		private void buttonAddCmd_Click(object sender, EventArgs e)
 		{ 
-			string currentCat = listBoxCategories.SelectedItem.ToString();
+			//TODO: Bugfix: need to verify that we have a selected category, or this will explode. 
+            string currentCat = listBoxCategories.SelectedItem.ToString();
 			Form addCmdDlg = new Dialog_AddCmd(currentCat);
 			DialogResult result = addCmdDlg.ShowDialog();
 
