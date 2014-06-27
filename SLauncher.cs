@@ -183,92 +183,126 @@ namespace ScriptLauncher
 
 		private void buttonEditCat_Click(object sender, EventArgs e)
 		{
-			string selectedCat = listBoxCategories.SelectedItem.ToString();
-			System.Diagnostics.Debug.WriteLine(listBoxCategories.SelectedItem);
-			Form editDlg = new Dialog_AddCategory(true, listBoxCategories.SelectedItem.ToString());
-			DialogResult result = editDlg.ShowDialog();
+			if (listBoxCategories.SelectedItem != null)
+            {
+                string selectedCat = listBoxCategories.SelectedItem.ToString();
+                System.Diagnostics.Debug.WriteLine(listBoxCategories.SelectedItem);
+                Form editDlg = new Dialog_AddCategory(true, listBoxCategories.SelectedItem.ToString());
+                DialogResult result = editDlg.ShowDialog();
 
-			if (result == DialogResult.OK)
-			{
-				listBoxCategories.DataSource = null;
-				listBoxCategories.DataSource = cfg.Categories;
-				initContextMenu();
-			}
+                if (result == DialogResult.OK)
+                {
+                    listBoxCategories.DataSource = null;
+                    listBoxCategories.DataSource = cfg.Categories;
+                    initContextMenu();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Edit category failed. No category selected", "Error: Edit Category");
+            }
 		}
 
-		private void buttonAddCmd_Click(object sender, EventArgs e)
-		{ 
-			//TODO: Bugfix: need to verify that we have a selected category, or this will explode. 
-            string currentCat = listBoxCategories.SelectedItem.ToString();
-			Form addCmdDlg = new Dialog_AddCmd(currentCat);
-			DialogResult result = addCmdDlg.ShowDialog();
+        private void buttonAddCmd_Click(object sender, EventArgs e)
+        {
+            if (listBoxCategories.SelectedItem != null)
+            {
+                string currentCat = listBoxCategories.SelectedItem.ToString();
+                Form addCmdDlg = new Dialog_AddCmd(currentCat);
+                DialogResult result = addCmdDlg.ShowDialog();
 
-			if (result == DialogResult.OK)
-			{
-				dataGridCommands.DataSource = null;
-				dataGridCommands.DataSource = FilterCommands(currentCat);
-				initContextMenu();
-			}
-		}
+                if (result == DialogResult.OK)
+                {
+                    dataGridCommands.DataSource = null;
+                    dataGridCommands.DataSource = FilterCommands(currentCat);
+                    initContextMenu();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Add command failed. No category selected.", "Error: Add Command");
+            }
+        }
 
 		private void buttonEditCmd_Click(object sender, EventArgs e)
 		{
-            string currentCat = listBoxCategories.SelectedItem.ToString();
-
-            int selectedRow = dataGridCommands.CurrentCell.RowIndex;
-            string selName = dataGridCommands.Rows[selectedRow].Cells[0].Value.ToString();
-            int selCmdIndex = SLConfig.FindCmdByName(selName);
-            System.Diagnostics.Debug.WriteLine("SelCmd: " + selName + " SelIndex: " + selCmdIndex);
-            
-            CmdItem selectedCmd = cfg.CMDList[selCmdIndex];
-            System.Diagnostics.Debug.WriteLine("Selected in Config: " + selectedCmd.ToString());
-
-            Form addCmdDlg = new Dialog_AddCmd(true, currentCat, selectedCmd, selCmdIndex);
-            DialogResult result = addCmdDlg.ShowDialog();
-
-            if (result == DialogResult.OK)
+            if (listBoxCategories.SelectedItem != null)
             {
-                dataGridCommands.DataSource = null;
-                dataGridCommands.DataSource = FilterCommands(currentCat);
-                initContextMenu();
-            } 
+                string currentCat = listBoxCategories.SelectedItem.ToString();
+
+                int selectedRow = dataGridCommands.CurrentCell.RowIndex;
+                string selName = dataGridCommands.Rows[selectedRow].Cells[0].Value.ToString();
+                int selCmdIndex = SLConfig.FindCmdByName(selName);
+                System.Diagnostics.Debug.WriteLine("SelCmd: " + selName + " SelIndex: " + selCmdIndex);
+
+                CmdItem selectedCmd = cfg.CMDList[selCmdIndex];
+                System.Diagnostics.Debug.WriteLine("Selected in Config: " + selectedCmd.ToString());
+
+                Form addCmdDlg = new Dialog_AddCmd(true, currentCat, selectedCmd, selCmdIndex);
+                DialogResult result = addCmdDlg.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    dataGridCommands.DataSource = null;
+                    dataGridCommands.DataSource = FilterCommands(currentCat);
+                    initContextMenu();
+                } 
+            }
+            else
+            {
+                MessageBox.Show("Edit command failed. No category or command selected.", "Error: Edit Command");
+            }
+            
 		}
 
 		private void buttonDelCmd_Click(object sender, EventArgs e)
 		{
-			string currentCat = listBoxCategories.SelectedItem.ToString();
+			if (listBoxCategories.SelectedItem != null )
+            {
+                string currentCat = listBoxCategories.SelectedItem.ToString();
 
-			int selectedRow = dataGridCommands.CurrentCell.RowIndex;
-			string selName = dataGridCommands.Rows[selectedRow].Cells[0].Value.ToString();
-			int selCmdIndex = SLConfig.FindCmdByName(selName);
-			
-			DialogResult result = ShowDeleteConfirmation(selName);
-			  
-			if (result == DialogResult.Yes)
-			{
-				SLConfig.DeleteCommand(selCmdIndex);
-				dataGridCommands.DataSource = null;
-				dataGridCommands.DataSource = FilterCommands(currentCat);
-				initContextMenu();
-			}
+                int selectedRow = dataGridCommands.CurrentCell.RowIndex;
+                string selName = dataGridCommands.Rows[selectedRow].Cells[0].Value.ToString();
+                int selCmdIndex = SLConfig.FindCmdByName(selName);
+
+                DialogResult result = ShowDeleteConfirmation(selName);
+
+                if (result == DialogResult.Yes)
+                {
+                    SLConfig.DeleteCommand(selCmdIndex);
+                    dataGridCommands.DataSource = null;
+                    dataGridCommands.DataSource = FilterCommands(currentCat);
+                    initContextMenu();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Delete command failed. No category or command selected", "Error: Delete Command");
+            }
 		}
 
 		private void buttonDelCat_Click(object sender, EventArgs e)
 		{
-			string currentCat = listBoxCategories.SelectedItem.ToString();
+            if (listBoxCategories.SelectedItem != null) 
+            {
+                string currentCat = listBoxCategories.SelectedItem.ToString();
 
-			DialogResult result = ShowDeleteConfirmation(currentCat);
+                DialogResult result = ShowDeleteConfirmation(currentCat);
 
-			if (result == DialogResult.Yes)
-			{
-				SLConfig.DeleteCategory(currentCat);
-				dataGridCommands.DataSource = null;
-				dataGridCommands.DataSource = FilterCommands(currentCat);
-				listBoxCategories.DataSource = null;
-				listBoxCategories.DataSource = cfg.Categories;
-				initContextMenu();
-			}
-
+                if (result == DialogResult.Yes)
+                {
+                    SLConfig.DeleteCategory(currentCat);
+                    dataGridCommands.DataSource = null;
+                    dataGridCommands.DataSource = FilterCommands(currentCat);
+                    listBoxCategories.DataSource = null;
+                    listBoxCategories.DataSource = cfg.Categories;
+                    initContextMenu();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Delete category failed. No category selected", "Error: Delete Category");
+            }
 		}
 
 		private DialogResult ShowDeleteConfirmation(string selectedItemString)

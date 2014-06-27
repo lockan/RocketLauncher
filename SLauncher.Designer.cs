@@ -51,6 +51,7 @@
             this.labelCmds = new System.Windows.Forms.Label();
             this.labelCategories = new System.Windows.Forms.Label();
             this.buttonHide = new System.Windows.Forms.Button();
+            this.toolTipButtons = new System.Windows.Forms.ToolTip(this.components);
             this.sLConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.contextMenuStrip.SuspendLayout();
             this.panelOuter.SuspendLayout();
@@ -105,11 +106,14 @@
             this.labelConfig.Location = new System.Drawing.Point(13, 13);
             this.labelConfig.Name = "labelConfig";
             this.labelConfig.Size = new System.Drawing.Size(37, 13);
-            this.labelConfig.TabIndex = 1;
+            this.labelConfig.TabIndex = 0;
             this.labelConfig.Text = "Config";
             // 
             // panelOuter
             // 
+            this.panelOuter.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelOuter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelOuter.Controls.Add(this.buttonEditCmd);
             this.panelOuter.Controls.Add(this.buttonDelCmd);
@@ -124,75 +128,90 @@
             this.panelOuter.Location = new System.Drawing.Point(12, 29);
             this.panelOuter.Name = "panelOuter";
             this.panelOuter.Size = new System.Drawing.Size(560, 291);
-            this.panelOuter.TabIndex = 2;
+            this.panelOuter.TabIndex = 1;
             // 
             // buttonEditCmd
             // 
+            this.buttonEditCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonEditCmd.Image = ((System.Drawing.Image)(resources.GetObject("buttonEditCmd.Image")));
             this.buttonEditCmd.Location = new System.Drawing.Point(179, 252);
             this.buttonEditCmd.Name = "buttonEditCmd";
             this.buttonEditCmd.Size = new System.Drawing.Size(32, 30);
-            this.buttonEditCmd.TabIndex = 13;
+            this.buttonEditCmd.TabIndex = 12;
+            this.toolTipButtons.SetToolTip(this.buttonEditCmd, "Edit Command");
             this.buttonEditCmd.UseVisualStyleBackColor = true;
             this.buttonEditCmd.Click += new System.EventHandler(this.buttonEditCmd_Click);
             // 
             // buttonDelCmd
             // 
+            this.buttonDelCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonDelCmd.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelCmd.Image")));
             this.buttonDelCmd.Location = new System.Drawing.Point(217, 252);
             this.buttonDelCmd.Name = "buttonDelCmd";
             this.buttonDelCmd.Size = new System.Drawing.Size(32, 30);
-            this.buttonDelCmd.TabIndex = 12;
+            this.buttonDelCmd.TabIndex = 13;
+            this.toolTipButtons.SetToolTip(this.buttonDelCmd, "Delete Command");
             this.buttonDelCmd.UseVisualStyleBackColor = true;
             this.buttonDelCmd.Click += new System.EventHandler(this.buttonDelCmd_Click);
             // 
             // buttonAddCmd
             // 
+            this.buttonAddCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonAddCmd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAddCmd.Image")));
             this.buttonAddCmd.Location = new System.Drawing.Point(141, 252);
             this.buttonAddCmd.Name = "buttonAddCmd";
             this.buttonAddCmd.Size = new System.Drawing.Size(32, 30);
             this.buttonAddCmd.TabIndex = 11;
+            this.toolTipButtons.SetToolTip(this.buttonAddCmd, "Add Command");
             this.buttonAddCmd.UseVisualStyleBackColor = true;
             this.buttonAddCmd.Click += new System.EventHandler(this.buttonAddCmd_Click);
             // 
             // buttonEditCat
             // 
+            this.buttonEditCat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonEditCat.Image = ((System.Drawing.Image)(resources.GetObject("buttonEditCat.Image")));
             this.buttonEditCat.Location = new System.Drawing.Point(42, 252);
             this.buttonEditCat.Name = "buttonEditCat";
             this.buttonEditCat.Size = new System.Drawing.Size(32, 30);
-            this.buttonEditCat.TabIndex = 10;
+            this.buttonEditCat.TabIndex = 9;
+            this.toolTipButtons.SetToolTip(this.buttonEditCat, "Edit Category");
             this.buttonEditCat.UseVisualStyleBackColor = true;
             this.buttonEditCat.Click += new System.EventHandler(this.buttonEditCat_Click);
             // 
             // buttonDelCat
             // 
+            this.buttonDelCat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonDelCat.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelCat.Image")));
             this.buttonDelCat.Location = new System.Drawing.Point(80, 252);
             this.buttonDelCat.Name = "buttonDelCat";
             this.buttonDelCat.Size = new System.Drawing.Size(32, 30);
-            this.buttonDelCat.TabIndex = 9;
+            this.buttonDelCat.TabIndex = 10;
+            this.toolTipButtons.SetToolTip(this.buttonDelCat, "Delete Category");
             this.buttonDelCat.UseVisualStyleBackColor = true;
             this.buttonDelCat.Click += new System.EventHandler(this.buttonDelCat_Click);
             // 
             // buttonAddCat
             // 
+            this.buttonAddCat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonAddCat.Image = ((System.Drawing.Image)(resources.GetObject("buttonAddCat.Image")));
             this.buttonAddCat.Location = new System.Drawing.Point(4, 252);
             this.buttonAddCat.Name = "buttonAddCat";
             this.buttonAddCat.Size = new System.Drawing.Size(32, 30);
             this.buttonAddCat.TabIndex = 8;
+            this.toolTipButtons.SetToolTip(this.buttonAddCat, "Add Category");
             this.buttonAddCat.UseVisualStyleBackColor = true;
             this.buttonAddCat.Click += new System.EventHandler(this.buttonAddCat_Click);
             // 
             // panelGridPane
             // 
+            this.panelGridPane.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelGridPane.Controls.Add(this.dataGridCommands);
             this.panelGridPane.Location = new System.Drawing.Point(141, 21);
             this.panelGridPane.Name = "panelGridPane";
             this.panelGridPane.Size = new System.Drawing.Size(403, 225);
-            this.panelGridPane.TabIndex = 7;
+            this.panelGridPane.TabIndex = 6;
             // 
             // dataGridCommands
             // 
@@ -202,6 +221,7 @@
             this.dataGridCommands.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gridColumnName,
             this.gridColumnCommand});
+            this.dataGridCommands.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridCommands.Location = new System.Drawing.Point(0, 0);
             this.dataGridCommands.MultiSelect = false;
             this.dataGridCommands.Name = "dataGridCommands";
@@ -209,7 +229,7 @@
             this.dataGridCommands.RowHeadersVisible = false;
             this.dataGridCommands.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridCommands.Size = new System.Drawing.Size(403, 225);
-            this.dataGridCommands.TabIndex = 6;
+            this.dataGridCommands.TabIndex = 7;
             // 
             // gridColumnName
             // 
@@ -229,11 +249,13 @@
             // 
             // listBoxCategories
             // 
+            this.listBoxCategories.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.listBoxCategories.FormattingEnabled = true;
             this.listBoxCategories.Location = new System.Drawing.Point(4, 21);
             this.listBoxCategories.Name = "listBoxCategories";
             this.listBoxCategories.Size = new System.Drawing.Size(130, 225);
-            this.listBoxCategories.TabIndex = 5;
+            this.listBoxCategories.TabIndex = 4;
             this.listBoxCategories.SelectedIndexChanged += new System.EventHandler(this.listBoxCategories_SelectedIndexChanged);
             // 
             // labelCmds
@@ -242,8 +264,8 @@
             this.labelCmds.Location = new System.Drawing.Point(138, 3);
             this.labelCmds.Name = "labelCmds";
             this.labelCmds.Size = new System.Drawing.Size(59, 13);
-            this.labelCmds.TabIndex = 4;
-            this.labelCmds.Text = "Commands";
+            this.labelCmds.TabIndex = 5;
+            this.labelCmds.Text = "&Commands";
             // 
             // labelCategories
             // 
@@ -251,16 +273,18 @@
             this.labelCategories.Location = new System.Drawing.Point(4, 4);
             this.labelCategories.Name = "labelCategories";
             this.labelCategories.Size = new System.Drawing.Size(57, 13);
-            this.labelCategories.TabIndex = 1;
-            this.labelCategories.Text = "Categories";
+            this.labelCategories.TabIndex = 3;
+            this.labelCategories.Text = "C&ategories";
             // 
             // buttonHide
             // 
+            this.buttonHide.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonHide.Location = new System.Drawing.Point(497, 326);
             this.buttonHide.Name = "buttonHide";
             this.buttonHide.Size = new System.Drawing.Size(75, 23);
-            this.buttonHide.TabIndex = 3;
+            this.buttonHide.TabIndex = 14;
             this.buttonHide.Text = "&Hide";
+            this.toolTipButtons.SetToolTip(this.buttonHide, "Hide in task tray");
             this.buttonHide.UseVisualStyleBackColor = true;
             this.buttonHide.Click += new System.EventHandler(this.buttonHide_Click);
             // 
@@ -277,6 +301,7 @@
             this.Controls.Add(this.panelOuter);
             this.Controls.Add(this.labelConfig);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "SLauncher";
             this.Text = "ScriptLauncher";
             this.Load += new System.EventHandler(this.SLauncher_Load);
@@ -315,6 +340,7 @@
 		private System.Windows.Forms.Button buttonAddCmd;
 		private System.Windows.Forms.Button buttonEditCat;
 		private System.Windows.Forms.Button buttonDelCat;
+        private System.Windows.Forms.ToolTip toolTipButtons;
     }
 }
 
