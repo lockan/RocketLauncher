@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ScriptLauncher
+namespace RocketLauncher
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace ScriptLauncher
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SLauncher());
+            Application.Run(new RocketLauncher());
         }
     }
 }

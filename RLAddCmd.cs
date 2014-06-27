@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ScriptLauncher
+namespace RocketLauncher
 {
 	public partial class Dialog_AddCmd : Form
 	{
@@ -56,14 +56,14 @@ namespace ScriptLauncher
                 string newCName = textBoxCmdName.Text.Trim();
                 string newCValue = textBoxCmdValue.Text.Trim();
                 CmdItem editedCmd = new CmdItem(category, newCName, newCValue);
-                SLConfig.ReplaceCommand(editIndex, editedCmd);
+                RLConfig.ReplaceCommand(editIndex, editedCmd);
                 this.DialogResult = DialogResult.OK;
             }
             else if (!editMode)
             { 
                 string newCName = textBoxCmdName.Text.Trim();
 			    string newCValue = textBoxCmdValue.Text.Trim();
-			    SLConfig.AddCommand(category, newCName, newCValue);
+			    RLConfig.AddCommand(category, newCName, newCValue);
 			    this.DialogResult = DialogResult.OK;
             }
 		}

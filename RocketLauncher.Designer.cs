@@ -1,6 +1,6 @@
-﻿namespace ScriptLauncher
+﻿namespace RocketLauncher
 {
-    partial class SLauncher
+    partial class RocketLauncher
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SLauncher));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RocketLauncher));
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -290,9 +290,9 @@
             // 
             // sLConfigBindingSource
             // 
-            this.sLConfigBindingSource.DataSource = typeof(ScriptLauncher.SLConfig);
+            this.sLConfigBindingSource.DataSource = typeof(RLConfig);
             // 
-            // SLauncher
+            // RocketLauncher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -302,9 +302,9 @@
             this.Controls.Add(this.labelConfig);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MinimumSize = new System.Drawing.Size(600, 400);
-            this.Name = "SLauncher";
-            this.Text = "ScriptLauncher";
-            this.Load += new System.EventHandler(this.SLauncher_Load);
+            this.Name = "RocketLauncher";
+            this.Text = "RocketLauncher";
+            this.Load += new System.EventHandler(this.RocketLauncher_Load);
             this.contextMenuStrip.ResumeLayout(false);
             this.panelOuter.ResumeLayout(false);
             this.panelOuter.PerformLayout();

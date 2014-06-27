@@ -1,4 +1,4 @@
-﻿namespace ScriptLauncher
+﻿namespace RocketLauncher
 {
 	partial class Dialog_AddCategory
 	{

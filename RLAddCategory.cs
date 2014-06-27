@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ScriptLauncher
+namespace RocketLauncher
 {
 	public partial class Dialog_AddCategory : Form
 	{
@@ -47,7 +47,7 @@ namespace ScriptLauncher
 			{
 				if (newCatString != String.Empty && newCatString != " ")
 				{
-					SLConfig.RenameCategory(editString, newCatString);
+					RLConfig.RenameCategory(editString, newCatString);
 					this.DialogResult = DialogResult.OK;
 				}
 			}
@@ -55,8 +55,8 @@ namespace ScriptLauncher
 			{
 				if (newCatString != String.Empty && newCatString != " ")
 				{
-					SLConfig.Dbg("Adding " + newCatString);
-					SLConfig.AddCategory(newCatString);
+					RLConfig.Dbg("Adding " + newCatString);
+					RLConfig.AddCategory(newCatString);
 					this.DialogResult = DialogResult.OK;
 				}
 			}

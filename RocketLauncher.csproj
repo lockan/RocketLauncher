@@ -7,8 +7,8 @@
     <ProjectGuid>{155169E6-2154-42D9-A016-44D7C75E2CFF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ScriptLauncher</RootNamespace>
-    <AssemblyName>ScriptLauncher</AssemblyName>
+    <RootNamespace>RocketLauncher</RootNamespace>
+    <AssemblyName>RocketLauncher</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -48,35 +48,35 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CmdItem.cs" />
-    <Compile Include="SLAddCategory.cs">
+    <Compile Include="RLAddCategory.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SLAddCategory.Designer.cs">
-      <DependentUpon>SLAddCategory.cs</DependentUpon>
+    <Compile Include="RLAddCategory.Designer.cs">
+      <DependentUpon>RLAddCategory.cs</DependentUpon>
     </Compile>
-    <Compile Include="SLAddCmd.cs">
+    <Compile Include="RLAddCmd.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SLAddCmd.Designer.cs">
-      <DependentUpon>SLAddCmd.cs</DependentUpon>
+    <Compile Include="RLAddCmd.Designer.cs">
+      <DependentUpon>RLAddCmd.cs</DependentUpon>
     </Compile>
-    <Compile Include="SLConfig.cs" />
-    <Compile Include="SLauncher.cs">
+    <Compile Include="RLConfig.cs" />
+    <Compile Include="RocketLauncher.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SLauncher.Designer.cs">
-      <DependentUpon>SLauncher.cs</DependentUpon>
+    <Compile Include="RocketLauncher.Designer.cs">
+      <DependentUpon>RocketLauncher.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="SLAddCategory.resx">
-      <DependentUpon>SLAddCategory.cs</DependentUpon>
+    <EmbeddedResource Include="RLAddCategory.resx">
+      <DependentUpon>RLAddCategory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SLAddCmd.resx">
-      <DependentUpon>SLAddCmd.cs</DependentUpon>
+    <EmbeddedResource Include="RLAddCmd.resx">
+      <DependentUpon>RLAddCmd.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SLauncher.resx">
-      <DependentUpon>SLauncher.cs</DependentUpon>
+    <EmbeddedResource Include="RocketLauncher.resx">
+      <DependentUpon>RocketLauncher.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -86,7 +86,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\DataSources\SLConfig.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

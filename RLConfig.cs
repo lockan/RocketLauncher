@@ -5,9 +5,9 @@ using System.IO;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace ScriptLauncher
+namespace RocketLauncher
 {
-	public class SLConfig
+	public class RLConfig
 	{
 		private static string dataPath = Application.LocalUserAppDataPath;
 		private static string configPath = dataPath + "\\config.xml";
@@ -16,7 +16,7 @@ namespace ScriptLauncher
 		private static List<CmdItem> cmdList = new List<CmdItem>();
 		private static List<string> categories = new List<string>();
 
-		public SLConfig()
+		public RLConfig()
 		{
 			ParseConfig();
 		}

@@ -8,27 +8,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using ScriptLauncher;
+using RocketLauncher;
 
-namespace ScriptLauncher
+namespace RocketLauncher
 {
-    public partial class SLauncher : Form
+    public partial class RocketLauncher : Form
     {
 		//New private instance of config. Constructor runs ParseConfig.
-		private static SLConfig cfg = new SLConfig();
+		private static RLConfig cfg = new RLConfig();
 
         //Form visibility control flags. 
         private bool showForm;
         private bool closeForm;
 		
-		public SLauncher()
+		public RocketLauncher()
         {
             InitializeComponent();
             initContextMenu();
             SetVisibleCore(false);
 		}
 
-        private void SLauncher_Load(object sender, EventArgs e)
+        private void RocketLauncher_Load(object sender, EventArgs e)
         {
             //this.WindowState = FormWindowState.Minimized;
             this.Hide();
@@ -87,7 +87,7 @@ namespace ScriptLauncher
 		// Adds dropdown items for each item in the cmd array to the toolstrip with the matching category name.  
 		private void initContextMenu()
 		{
-            SLConfig.Dbg("IN context init");
+            RLConfig.Dbg("IN context init");
             contextMenuStrip.Items.Clear();
 
 			for (int c = 0; c < cfg.Categories.Count; c++)
@@ -118,7 +118,7 @@ namespace ScriptLauncher
 						catLabel.DropDownItems.Add(newItem);
 					}
 				}
-                SLConfig.Dbg("Done context init");
+                RLConfig.Dbg("Done context init");
 			}
 
 			//Always add Exit Button to bottom of menu
@@ -232,7 +232,7 @@ namespace ScriptLauncher
 
                 int selectedRow = dataGridCommands.CurrentCell.RowIndex;
                 string selName = dataGridCommands.Rows[selectedRow].Cells[0].Value.ToString();
-                int selCmdIndex = SLConfig.FindCmdByName(selName);
+                int selCmdIndex = RLConfig.FindCmdByName(selName);
                 System.Diagnostics.Debug.WriteLine("SelCmd: " + selName + " SelIndex: " + selCmdIndex);
 
                 CmdItem selectedCmd = cfg.CMDList[selCmdIndex];
@@ -263,13 +263,13 @@ namespace ScriptLauncher
 
                 int selectedRow = dataGridCommands.CurrentCell.RowIndex;
                 string selName = dataGridCommands.Rows[selectedRow].Cells[0].Value.ToString();
-                int selCmdIndex = SLConfig.FindCmdByName(selName);
+                int selCmdIndex = RLConfig.FindCmdByName(selName);
 
                 DialogResult result = ShowDeleteConfirmation(selName);
 
                 if (result == DialogResult.Yes)
                 {
-                    SLConfig.DeleteCommand(selCmdIndex);
+                    RLConfig.DeleteCommand(selCmdIndex);
                     dataGridCommands.DataSource = null;
                     dataGridCommands.DataSource = FilterCommands(currentCat);
                     initContextMenu();
@@ -291,7 +291,7 @@ namespace ScriptLauncher
 
                 if (result == DialogResult.Yes)
                 {
-                    SLConfig.DeleteCategory(currentCat);
+                    RLConfig.DeleteCategory(currentCat);
                     dataGridCommands.DataSource = null;
                     dataGridCommands.DataSource = FilterCommands(currentCat);
                     listBoxCategories.DataSource = null;
