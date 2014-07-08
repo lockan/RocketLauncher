@@ -12,7 +12,7 @@ using RocketLauncher;
 
 namespace RocketLauncher
 {
-    public partial class RocketLauncher : Form
+    public partial class RLauncher : Form
     {
 		//New private instance of config. Constructor runs ParseConfig.
 		private static RLConfig cfg = new RLConfig();
@@ -21,7 +21,7 @@ namespace RocketLauncher
         private bool showForm;
         private bool closeForm;
 		
-		public RocketLauncher()
+		public RLauncher()
         {
             InitializeComponent();
             initContextMenu();
@@ -315,5 +315,15 @@ namespace RocketLauncher
 
 			return result;
 		}
+
+        private void sLConfigBindingSource_CurrentChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelBanner_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
 	}
 }

@@ -16,7 +16,7 @@ namespace RocketLauncher
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new RocketLauncher());
+            Application.Run(new RLauncher());
         }
     }
 }
