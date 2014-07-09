@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.IO;
 using RocketLauncher;
 
 namespace RocketLauncher
@@ -163,9 +164,23 @@ namespace RocketLauncher
 			//Create a new process and launch it. 
 			System.Diagnostics.Process command = new System.Diagnostics.Process();
 			System.Diagnostics.ProcessStartInfo commandInfo = new System.Diagnostics.ProcessStartInfo();
-			commandInfo.FileName = clickedItem.Name;
-			command.StartInfo = commandInfo;
-			command.Start();
+            commandInfo.FileName = clickedItem.Name;
+            try 
+            {
+                command.StartInfo = commandInfo;
+                command.Start();
+            }
+            catch (Win32Exception ex)
+            {
+                MessageBox.Show("Error: Could not find command \"" + commandInfo.FileName
+                    + "\" or command was not valid."
+                    + " Please ensure the command and path are correct."
+                    + "\n\n If you are certain the path is correct the command"
+                    + " may not be supported by RocketLauncher.",
+                    "Error: RocketLauncher misfired!", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
+            }
 		}
 
 		private void buttonAddCat_Click(object sender, EventArgs e)
@@ -199,7 +214,8 @@ namespace RocketLauncher
             }
             else
             {
-                MessageBox.Show("Edit category failed. No category selected", "Error: Edit Category");
+                MessageBox.Show("Edit category failed. No category selected", "Error: Edit Category", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 		}
 
@@ -220,7 +236,8 @@ namespace RocketLauncher
             }
             else
             {
-                MessageBox.Show("Add command failed. No category selected.", "Error: Add Command");
+                MessageBox.Show("Add command failed. No category selected.", "Error: Add Command",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -250,7 +267,8 @@ namespace RocketLauncher
             }
             else
             {
-                MessageBox.Show("Edit command failed. No category or command selected.", "Error: Edit Command");
+                MessageBox.Show("Edit command failed. No category or command selected.", "Error: Edit Command",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             
 		}
@@ -277,7 +295,8 @@ namespace RocketLauncher
             }
             else
             {
-                MessageBox.Show("Delete command failed. No category or command selected", "Error: Delete Command");
+                MessageBox.Show("Delete command failed. No category or command selected", "Error: Delete Command",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 		}
 
@@ -301,7 +320,8 @@ namespace RocketLauncher
             }
             else
             {
-                MessageBox.Show("Delete category failed. No category selected", "Error: Delete Category");
+                MessageBox.Show("Delete category failed. No category selected", "Error: Delete Category",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 		}
 
